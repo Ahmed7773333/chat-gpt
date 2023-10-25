@@ -1,0 +1,11 @@
+const String splach = 'assets/Splach.png';
+const String logo = 'assets/logo.png';
+const String send = 'assets/send.png';
+const String faq = 'assets/faq.png';
+const String logout = 'assets/logout.png';
+const String person = 'assets/person.png';
+const String sun = 'assets/sun.png';
+const String chat = 'assets/chat.png';
+const String flash = 'assets/flash.png';
+const String danger = 'assets/danger.png';
+const String delete = 'assets/delete.png';
