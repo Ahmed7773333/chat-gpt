@@ -2,13 +2,18 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class OpenContainers extends StatelessWidget {
+class OpenContainers extends StatefulWidget {
   final Widget closedWidget;
   final Widget openedWidget;
 
   const OpenContainers(
       {required this.closedWidget, required this.openedWidget, super.key});
 
+  @override
+  State<OpenContainers> createState() => _OpenContainersState();
+}
+
+class _OpenContainersState extends State<OpenContainers> {
   @override
   Widget build(BuildContext context) {
     return OpenContainer(
@@ -21,11 +26,11 @@ class OpenContainers extends StatelessWidget {
       closedColor: Colors.transparent,
       openColor: Colors.transparent,
       closedBuilder: (BuildContext context, void Function() action) {
-        return closedWidget;
+        return widget.closedWidget;
       },
       openBuilder:
           (BuildContext context, void Function({Object? returnValue}) action) {
-        return openedWidget;
+        return widget.openedWidget;
       },
     );
   }

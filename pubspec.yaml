@@ -51,6 +51,7 @@ dependencies:
   hive: ^2.2.3
   bubble: ^1.2.1
   animations: ^2.0.8
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

@@ -19,9 +19,15 @@ class CustomBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Bubble(
+      style: BubbleStyle(
+        elevation: 5,
+        shadowColor: blackColor,
+        padding: BubbleEdges.all(12.sp),
+        color: isMe ? blackColor : greenColor,
+        nipWidth: 8.w,
+        nipHeight: 24.h,
+      ),
       margin: BubbleEdges.only(top: 10.h),
-      stick: true,
-      color: isMe ? blackColor : greenColor,
       nip: isMe ? BubbleNip.leftBottom : BubbleNip.rightBottom,
       child: Text(
         text,

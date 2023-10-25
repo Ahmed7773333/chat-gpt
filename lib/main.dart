@@ -19,7 +19,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Directory directory = await getApplicationDocumentsDirectory();
   Hive.init(directory.path);
-  hive.Hive.registerAdapter(ColorAdapter());
+  hive.Hive.registerAdapter(ChatAdapter());
   await Hive.openBox<Chat>(ChatHelper.boxName);
   runApp(const MyApp());
 }

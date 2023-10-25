@@ -1,6 +1,8 @@
 import 'package:chatgpt_app/Theme/assets.dart';
 import 'package:chatgpt_app/Theme/colors.dart';
 import 'package:chatgpt_app/Theme/styles.dart';
+import 'package:chatgpt_app/database/helper.dart';
+import 'package:chatgpt_app/widgets/list_bubble.dart';
 import 'package:chatgpt_app/widgets/row_dashboard.dart';
 import 'package:chatgpt_app/widgets/space.dart';
 import 'package:chatgpt_app/widgets/text_field.dart';
@@ -38,7 +40,12 @@ class DashBoard extends StatelessWidget {
               ),
               const VerticalSpace(28),
               RowDashBoard(
-                  image: delete, text: 'Clear conversations', onPressed: () {}),
+                  image: delete,
+                  text: 'Clear conversations',
+                  onPressed: () {
+                    ChatHelper.cler();
+                    listOfBubblte.clear();
+                  }),
               const VerticalSpace(41),
               Row(
                 children: [

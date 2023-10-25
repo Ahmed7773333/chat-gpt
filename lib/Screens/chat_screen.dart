@@ -9,7 +9,7 @@ import 'package:chatgpt_app/Theme/styles.dart';
 import 'package:chatgpt_app/database/chat.dart';
 import 'package:chatgpt_app/database/helper.dart';
 import 'package:chatgpt_app/widgets/list_bubble.dart';
-import 'package:chatgpt_app/widgets/open_container.dart';
+import 'package:chatgpt_app/widgets/space.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -30,21 +30,8 @@ class _ChatScreenState extends State<ChatScreen> {
     final prompt = _promptController.text;
     try {
       final GPTResponce response = await ApiManager.getGPTResponse(prompt);
-      if (ChatHelper.getAll().isEmpty) {
-        Chat chat = Chat(messageFromMe: prompt, messageFromGPT: '');
-        ChatHelper.add(chat);
-        listOfBubblte.add(CustomBubble(
-            text: ChatHelper.getById(0)?.messageFromMe ?? '', isMe: true));
-      }
-      if (ChatHelper.getAll().length == 1) {
-        Chat chat = Chat(
-            messageFromMe: '',
-            messageFromGPT:
-                response.choices?.first.text ?? "No response received");
-        ChatHelper.add(chat);
-        listOfBubblte.add(CustomBubble(
-            text: ChatHelper.getById(1)?.messageFromGPT ?? '', isMe: false));
-      } else if (ChatHelper.getAll().length % 2 == 0) {
+
+      if (ChatHelper.getAll().length % 2 == 0) {
         Chat chat = Chat(messageFromMe: prompt, messageFromGPT: '');
         ChatHelper.add(chat);
         listOfBubblte.add(CustomBubble(
@@ -52,16 +39,16 @@ class _ChatScreenState extends State<ChatScreen> {
                     ?.messageFromMe ??
                 '',
             isMe: true));
-      } else if (ChatHelper.getAll().length % 2 != 0) {
+      }
+      if (ChatHelper.getAll().length % 2 != 0) {
         Chat chat = Chat(
             messageFromMe: '',
             messageFromGPT:
                 response.choices?.first.text ?? "No response received");
         ChatHelper.add(chat);
         listOfBubblte.add(CustomBubble(
-            text: ChatHelper.getById(ChatHelper.getAll().length - 1)
-                    ?.messageFromGPT ??
-                '',
+            text: ChatHelper.getAll()[ChatHelper.getAll().length - 1]
+                .messageFromGPT,
             isMe: false));
       }
       setState(() {
@@ -77,16 +64,48 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (ChatHelper.getAll().isNotEmpty && listOfBubblte.isEmpty) {
+      for (int i = 0; i < ChatHelper.getAll().length; i++) {
+        Chat chat = Chat(
+            messageFromMe: ChatHelper.getAll()[i].messageFromMe,
+            messageFromGPT: ChatHelper.getAll()[i].messageFromGPT);
+        if (i % 2 == 0) {
+          CustomBubble bubble =
+              CustomBubble(text: chat.messageFromMe, isMe: true);
+          listOfBubblte.add(bubble);
+        } else if (i % 2 != 0) {
+          CustomBubble bubble =
+              CustomBubble(text: chat.messageFromGPT, isMe: false);
+          listOfBubblte.add(bubble);
+        }
+      }
+    }
     return Scaffold(
       appBar: AppBar(
-        leading: OpenContainers(
-            closedWidget: const Icon(
-              Icons.list,
-              color: Colors.white,
-            ),
-            openedWidget: DashBoard()),
+        elevation: 0,
+        leading: InkWell(
+          onTap: () => Navigator.pushNamed(context, DashBoard.routeName)
+              .then((value) => setState(() {})),
+          child: Icon(
+            Icons.list,
+            color: Colors.white,
+            size: 35.sp,
+          ),
+        ),
         backgroundColor: Colors.transparent,
-        actions: const [ImageIcon(AssetImage(logo))],
+        actions: [
+          ImageIcon(
+            const AssetImage(logo),
+            size: 35.sp,
+          ),
+          const HorizontalSpace(10)
+        ],
+        bottom: PreferredSize(
+            preferredSize: Size(375.w, 8.h),
+            child: const Divider(
+              color: Colors.white,
+              thickness: 2,
+            )),
       ),
       body: Center(
         child: Column(
@@ -115,11 +134,12 @@ class _ChatScreenState extends State<ChatScreen> {
                         borderSide: const BorderSide(color: Colors.white)),
                     focusColor: Colors.white,
                     filled: true,
-                    fillColor: blackColor,
+                    fillColor: Colors.white.withOpacity(0.10000000149011612),
                     suffixIcon: InkWell(
                       onTap: _getGPTResponse,
                       child: Container(
-                        width: 36.w,
+                        margin: EdgeInsets.only(right: 10.w),
+                        width: 46.w,
                         height: 36.h,
                         padding: EdgeInsets.all(8.sp),
                         decoration: ShapeDecoration(
@@ -130,7 +150,10 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                         child: const Center(
                           child: ImageIcon(
-                            AssetImage(send),
+                            AssetImage(
+                              send,
+                            ),
+                            color: Colors.white,
                           ),
                         ),
                       ),
