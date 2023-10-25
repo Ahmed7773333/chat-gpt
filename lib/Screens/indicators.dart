@@ -1,4 +1,4 @@
-import 'package:chatgpt_app/Screens/dashboard.dart';
+import 'package:chatgpt_app/Screens/chat_screen.dart';
 import 'package:chatgpt_app/Theme/assets.dart';
 import 'package:chatgpt_app/Theme/colors.dart';
 import 'package:chatgpt_app/Theme/styles.dart';
@@ -83,7 +83,7 @@ class _IndecatorScreenState extends State<IndecatorScreen> {
                     );
                   } else if (controller.page!.floor() == indecatorCount - 1) {
                     Navigator.pushReplacementNamed(
-                        context, DashBoard.routeName);
+                        context, ChatScreen.routeName);
                   }
                 },
                 style: ElevatedButton.styleFrom(

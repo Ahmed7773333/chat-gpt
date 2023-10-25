@@ -70,7 +70,12 @@ class DashBoard extends StatelessWidget {
               const VerticalSpace(41),
               RowDashBoard(image: faq, text: 'Updates & FAQ', onPressed: () {}),
               const VerticalSpace(41),
-              RowDashBoard(image: logout, text: 'Logout', onPressed: () {}),
+              RowDashBoard(
+                  image: logout,
+                  text: 'Logout',
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
             ],
           ),
         ),
