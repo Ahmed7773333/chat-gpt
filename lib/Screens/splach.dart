@@ -6,6 +6,8 @@ import 'package:chatgpt_app/Theme/styles.dart';
 import 'package:chatgpt_app/widgets/space.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:chatgpt_app/database/helper.dart';
+import 'package:chatgpt_app/Screens/chat_screen.dart';
 
 class SplachScreen extends StatelessWidget {
   static const String routeName = '/splach';
@@ -14,7 +16,9 @@ class SplachScreen extends StatelessWidget {
   Future<void> _navigateToHome(BuildContext context) async {
     await Future.delayed(const Duration(seconds: 3));
     // ignore: use_build_context_synchronously
-    Navigator.of(context).pushReplacementNamed(IndecatorScreen.routeName);
+    Navigator.of(context).pushReplacementNamed(ChatHelper.getAll().isEmpty
+        ? IndecatorScreen.routeName
+        : ChatScreen.routeName);
   }
 
   @override
